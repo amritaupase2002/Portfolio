@@ -5,6 +5,7 @@ export const personalInfo = {
   email: "unnatisurpatne1110@example.com",
   phone: "+91 8408910770",
   address: "Nagpur, India",
+  resume: "/Unnati-Surpatne-Resume.pdf",
 };
 
 export const skills = [
