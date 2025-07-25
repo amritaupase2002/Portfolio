@@ -7,7 +7,7 @@ import Contact from './components/Contact';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './index.css';
-import Resume from './components/Resume';
+// import Resume from './components/Resume';
 
 function App() {
   return (
@@ -23,8 +23,8 @@ function App() {
         <Projects />
         <div className="section-spacer"></div>
         <Contact />
-        <div className="section-spacer"></div>
-        <Resume />
+        {/* <div className="section-spacer"></div>
+        <Resume /> */}
       </main>
       <Footer />
     </div>
