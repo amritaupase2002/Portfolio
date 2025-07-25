@@ -62,7 +62,7 @@ export const experiences = [
   {
     id: 2,
     role: "Web Development Intern",
-    company: "VIGO TECHNOWORLD PVT. LTD.",
+    company: "CODEMAKER PVT. LTD.",
     duration: "Mar 2023 - Sep 2023",
     description: [
       "Gained hands-on experience with HTML, CSS, and JavaScript to build responsive and interactive user interfaces",
