@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { personalInfo } from '../data';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState('about');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    handleResize(); // Set initial state
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +47,7 @@ const Navbar = () => {
         top: element.offsetTop - 80,
         behavior: 'smooth',
       });
+      setIsMenuOpen(false);
     }
   };
 
@@ -51,39 +68,94 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="nav-container">
-        <div className="nav-links">
-          {navItems.map((item) =>
-  item.label === 'Resume' ? (
-    <motion.button
-      key={item.id}
-      onClick={() => window.open(personalInfo.resume, '_blank')}
-      className="nav-link"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      {item.label}
-    </motion.button>
-  ) : (
-    <motion.button
-      key={item.id}
-      onClick={() => scrollToSection(item.id)}
-      className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      {item.label}
-      {activeSection === item.id && (
-        <motion.span
-          className="nav-indicator"
-          layoutId="nav-indicator"
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        />
-      )}
-    </motion.button>
-  )
-)}
+        {/* Mobile menu button */}
+        {isMobile && (
+          <motion.button
+            className="mobile-menu-button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            whileTap={{ scale: 0.95 }}
+          >
+            {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          </motion.button>
+        )}
 
-        </div>
+        {/* Desktop nav links */}
+        {!isMobile && (
+          <div className="nav-links">
+            {navItems.map((item) =>
+              item.label === 'Resume' ? (
+                <motion.button
+                  key={item.id}
+                  onClick={() => window.open(personalInfo.resume, '_blank')}
+                  className="nav-link"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {item.label}
+                </motion.button>
+              ) : (
+                <motion.button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {item.label}
+                  {activeSection === item.id && (
+                    <motion.span
+                      className="nav-indicator"
+                      layoutId="nav-indicator"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </motion.button>
+              )
+            )}
+          </div>
+        )}
+
+        {/* Mobile menu */}
+        <AnimatePresence>
+          {isMobile && isMenuOpen && (
+            <motion.div
+              className="mobile-nav-links"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              {navItems.map((item) =>
+                item.label === 'Resume' ? (
+                  <motion.button
+                    key={item.id}
+                    onClick={() => window.open(personalInfo.resume, '_blank')}
+                    className="mobile-nav-link"
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {item.label}
+                  </motion.button>
+                ) : (
+                  <motion.button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`mobile-nav-link ${activeSection === item.id ? 'active' : ''}`}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {item.label}
+                    {activeSection === item.id && (
+                      <motion.span
+                        className="nav-indicator"
+                        layoutId="mobile-nav-indicator"
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </motion.button>
+                )
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   );

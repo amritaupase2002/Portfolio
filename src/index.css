@@ -119,6 +119,7 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .nav-links {
@@ -136,6 +137,9 @@ body::before {
   border-radius: 30px;
   transition: all 0.3s ease;
   position: relative;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
 
 .nav-link:hover {
@@ -150,6 +154,102 @@ body::before {
   box-shadow: var(--shadow-md);
 }
 
+.nav-indicator {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background-color: currentColor;
+  border-radius: 50%;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-button {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--primary-800);
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+/* Mobile Nav Links */
+.mobile-nav-links {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  box-shadow: var(--shadow-lg);
+  z-index: 999;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-nav-link {
+  color: var(--primary-800);
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.mobile-nav-link:hover {
+  background-color: var(--accent-50);
+}
+
+.mobile-nav-link.active {
+  color: var(--text-light);
+  background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+  font-weight: 600;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.75rem 1.5rem;
+    justify-content: space-between;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: block;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    top: 10px;
+    padding: 0.5rem 1rem;
+  }
+
+  .mobile-nav-link {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}
 /* Section Styles */
 section {
   padding: 8rem 0;
